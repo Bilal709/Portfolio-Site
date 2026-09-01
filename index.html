@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio · Home</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ---------- CSS ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fafc;
+            color: #0b1a2f;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Shared navbar & footer */
+        .navbar,
+        .footer {
+            background: #0b1a2f;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar a,
+        .footer a {
+            color: #e2e8f0;
+            text-decoration: none;
+            margin: 0 0.75rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .navbar a:hover,
+        .footer a:hover {
+            color: #93bbfc;
+        }
+
+        .navbar .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .footer {
+            margin-top: auto;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            padding: 1.2rem 2rem;
+        }
+
+        .footer span {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0.4;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* Home */
+        .hero {
+            background: white;
+            padding: 3rem 2.5rem;
+            border-radius: 32px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e9edf3;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #2a3f5a;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .hero .tag {
+            display: inline-block;
+            background: #e2eaf9;
+            color: #1a3a6b;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid #e9edf3;
+            transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
+        }
+
+        .project-card:hover {
+            border-color: #cbd5e1;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        .project-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .project-card p {
+            color: #33475f;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-card .tech {
+            font-size: 0.8rem;
+            background: #eef2f6;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            display: inline-block;
+            color: #1e2f44;
+        }
+
+        /* About */
+        .about-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 32px;
+            border: 1px solid #e9edf3;
+            max-width: 720px;
+        }
+
+        .about-card p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #1e2f44;
+            margin-top: 0.75rem;
+        }
+
+        .about-card .social-links {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .about-card .social-links a {
+            background: #eef2f6;
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            color: #0b1a2f;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .about-card .social-links a:hover {
+            background: #dce2ec;
+        }
+
+        /* Contact */
+        .contact-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 32px;
+            border: 1px solid #e9edf3;
+            max-width: 600px;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .contact-form label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #dce2ec;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: #fafcff;
+            transition: 0.15s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+        }
+
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form .error {
+            color: #dc2626;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .contact-form .error.show {
+            display: block;
+        }
+
+        .btn {
+            background: #0b1a2f;
+            color: white;
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #1a2f4a;
+            transform: scale(0.97);
+        }
+
+        .contact-form .success-msg {
+            background: #dff0e6;
+            color: #0b5e42;
+            padding: 0.8rem 1.2rem;
+            border-radius: 60px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .contact-form .success-msg.show {
+            display: block;
+        }
+
+        /* responsive */
+        @media (max-width: 640px) {
+            .navbar {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: stretch;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero {
+                padding: 2rem 1.25rem;
+            }
+            .about-card,
+            .contact-form {
+                padding: 1.5rem;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+        }
+
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== SHARED NAVBAR ========== -->
+    <nav class="navbar">
+        <div class="logo">👨‍💻 Bilal</div>
+        <div class="nav-links">
+            <a href="#" data-page="home">Home</a>
+            <a href="#" data-page="projects">Projects</a>
+            <a href="#" data-page="about">About</a>
+            <a href="#" data-page="contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- ========== MAIN CONTAINER ========== -->
+    <div class="container">
+
+        <!-- PAGE: HOME -->
+        <section id="page-home" class="page active">
+            <div class="hero">
+                <h1>Hi, I'm Bilal ✌️</h1>
+                <p>I build clean, thoughtful web experiences. I'm a front-end developer who loves turning ideas into interactive, responsive interfaces.</p>
+                <div class="tag">✦ available for projects</div>
+            </div>
+        </section>
+
+        <!-- PAGE: PROJECTS (dynamic) -->
+        <section id="page-projects" class="page">
+            <h2>Projects</h2>
+            <div id="projectsContainer" class="projects-grid">
+                <!-- injected by JS -->
+            </div>
+        </section>
+
+        <!-- PAGE: ABOUT -->
+        <section id="page-about" class="page">
+            <div class="about-card">
+                <h2>About me</h2>
+                <p>I'm a creative developer with a passion for minimal, user-friendly design. I enjoy working with modern JavaScript, CSS, and building things that people actually find useful. When I'm not coding, I'm probably reading or exploring new tech.</p>
+                <div class="social-links">
+                    <a href="https://github.com/Bilal709"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://www.linkedin.com/in/muhammad-bilal-9b4253286?utm_source=share_via&utm_content=profile&utm_medium=member_android"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                    <a href="https://www.instagram.com/mbilalr7_?igsi=Y3M0YWJuMnRlNnF5"><i class="fab fa-instagram"></i> Instagram</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: CONTACT -->
+        <section id="page-contact" class="page">
+            <h2>Contact</h2>
+            <div class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="contactName">Name</label>
+                    <input type="text" id="contactName" placeholder="Your name" />
+                    <div class="error" id="nameError">Name is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" id="contactEmail" placeholder="you@example.com" />
+                    <div class="error" id="emailError">Valid email is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Message</label>
+                    <textarea id="contactMessage" placeholder="Write your message…"></textarea>
+                    <div class="error" id="messageError">Message cannot be empty</div>
+                </div>
+                <button type="button" class="btn" id="sendBtn">Send message</button>
+                <div class="success-msg" id="successMsg">✅ Thanks! Your message was sent (demo).</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========== SHARED FOOTER ========== -->
+    <footer class="footer">
+        <span>© 2026 Bilal · built with ❤️</span>
+        <span>✨ all pages connected</span>
+    </footer>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        (function() {
+            // ----- PROJECT DATA (dynamic) -----
+            const projects = [{
+                title: 'Weather Dashboard',
+                description: 'Live weather data with 5-day forecast and location search.',
+                tech: 'React, OpenWeather API'
+            }, {
+                title: 'Task Manager',
+                description: 'Kanban-style task board with drag & drop and local storage.',
+                tech: 'Vanilla JS, CSS Grid'
+            }, {
+                title: 'Portfolio Builder',
+                description: 'A simple drag-and-drop portfolio generator for creatives.',
+                tech: 'Vue.js, Firebase'
+            }, {
+                title: 'EcoTracker',
+                description: 'Carbon footprint tracker with visual charts and tips.',
+                tech: 'Chart.js, Node.js'
+            }];
+
+            // ----- DOM refs -----
+            const pages = {
+                home: document.getElementById('page-home'),
+                projects: document.getElementById('page-projects'),
+                about: document.getElementById('page-about'),
+                contact: document.getElementById('page-contact')
+            };
+            const navLinks = document.querySelectorAll('[data-page]');
+            const projectsContainer = document.getElementById('projectsContainer');
+
+            // ----- RENDER PROJECTS -----
+            function renderProjects() {
+                projectsContainer.innerHTML = projects.map(p => `
+                    <div class="project-card">
+                        <h3>${p.title}</h3>
+                        <p>${p.description}</p>
+                        <span class="tech">${p.tech}</span>
+                    </div>
+                `).join('');
+            }
+
+            // ----- NAVIGATION (SPA routing) -----
+            function navigate(pageId) {
+                // hide all pages
+                Object.values(pages).forEach(p => p.classList.remove('active'));
+                // show target
+                if (pages[pageId]) {
+                    pages[pageId].classList.add('active');
+                } else {
+                    pages.home.classList.add('active'); // fallback
+                }
+                // update URL hash
+                if (pageId) window.location.hash = pageId;
+                // re-render projects if navigating to projects (in case of future updates)
+                if (pageId === 'projects') renderProjects();
+            }
+
+            // ----- handle nav clicks -----
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+                    navigate(page);
+                });
+            });
+
+            // ----- hashchange (browser back/forward) -----
+            window.addEventListener('hashchange', () => {
+                const hash = window.location.hash.replace('#', '');
+                if (hash && pages[hash]) {
+                    navigate(hash);
+                } else {
+                    navigate('home');
+                }
+            });
+
+            // ----- CONTACT FORM VALIDATION (client-side) -----
+            const nameInput = document.getElementById('contactName');
+            const emailInput = document.getElementById('contactEmail');
+            const messageInput = document.getElementById('contactMessage');
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const messageError = document.getElementById('messageError');
+            const sendBtn = document.getElementById('sendBtn');
+            const successMsg = document.getElementById('successMsg');
+
+            function validateEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            function handleContactSubmit() {
+                let valid = true;
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+                const message = messageInput.value.trim();
+
+                // Name
+                if (name === '') {
+                    nameError.classList.add('show');
+                    valid = false;
+                } else {
+                    nameError.classList.remove('show');
+                }
+
+                // Email
+                if (!validateEmail(email)) {
+                    emailError.classList.add('show');
+                    valid = false;
+                } else {
+                    emailError.classList.remove('show');
+                }
+
+                // Message
+                if (message === '') {
+                    messageError.classList.add('show');
+                    valid = false;
+                } else {
+                    messageError.classList.remove('show');
+                }
+
+                if (valid) {
+                    successMsg.classList.add('show');
+                    // (demo: no backend)
+                    setTimeout(() => {
+                        successMsg.classList.remove('show');
+                    }, 4000);
+                    // optionally clear fields
+                    nameInput.value = '';
+                    emailInput.value = '';
+                    messageInput.value = '';
+                } else {
+                    successMsg.classList.remove('show');
+                }
+            }
+
+            sendBtn.addEventListener('click', handleContactSubmit);
+
+            // real-time error hiding on input
+            nameInput.addEventListener('input', () => nameError.classList.remove('show'));
+            emailInput.addEventListener('input', () => emailError.classList.remove('show'));
+            messageInput.addEventListener('input', () => messageError.classList.remove('show'));
+
+            // ----- INIT -----
+            // render projects once
+            renderProjects();
+
+            // handle initial hash on load
+            const initialHash = window.location.hash.replace('#', '');
+            if (initialHash && pages[initialHash]) {
+                navigate(initialHash);
+            } else {
+                navigate('home');
+            }
+        })();
+    </script>
+</body>
+</html>
